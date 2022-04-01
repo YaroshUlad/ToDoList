@@ -11,7 +11,6 @@ export const Checkbox = (props: CheckboxPropsType) => {
         props.callBack(boxid)
     }
     return (
-        <input type="checkbox" checked={props.isDone} defaultChecked={false}
-               onClick={() => onClickHandler(props.boxID)}/>
+        <input type="checkbox" checked={props.isDone} onChange={() => onClickHandler(props.boxID)}/>
     )
 }
