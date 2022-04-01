@@ -1,4 +1,61 @@
 import React, {useState} from "react";
+import {ObjectsInDataArrayType, ToDoList} from "./components/ToDoList";
+
+
+type FilterButtonType = 'All' | 'Active' | 'Completed'
+const App = () => {
+    let [data, setData] = useState<Array<ObjectsInDataArrayType>>([
+        {id: 1, title: "HTML&CSS", isDone: true},
+        {id: 2, title: "JS", isDone: true},
+        {id: 3, title: "ReactJS", isDone: false},
+        {id: 4, title: "Rest API", isDone: false}
+    ])
+
+    let [filterButton, setFilterButton] = useState<FilterButtonType>('All')
+
+    const buttonNameReceiver = (buttonName: string, buttonID: number) => {
+        console.log(buttonName, buttonID)
+        if (buttonName === 'All' || buttonName === 'Active' || buttonName === 'Completed') {
+            setFilterButton(buttonName)
+        }
+        if (buttonName === 'x') {
+            setData(data.filter(el => el.id !== buttonID))
+        }
+    }
+    let filteredData = data
+    if (filterButton === 'Active') {
+        filteredData = data.filter(el => el.isDone === false)
+    }
+    if (filterButton === 'Completed') {
+        filteredData = data.filter(el => el.isDone === true)
+    }
+    const checkBoxIdReceiver = (boxId: number) => {
+        setData(data.map(el => {
+            if (el.id === boxId) {
+                if (el.isDone === true) {
+                    el.isDone = false
+                } else {
+                    el.isDone = true
+                }
+            }
+            return el
+        }))
+    }
+
+
+    return (
+        <div>
+            <ToDoList callBackBox={checkBoxIdReceiver} data={filteredData} title={'What to Learn'}
+                      callBack={buttonNameReceiver}/>
+        </div>
+    )
+}
+
+export default App
+
+
+/*
+import React, {useState} from "react";
 import {ObjectsInDataState, ToDoList} from "./components/ToDoList";
 
 type FilterButtonNameType = 'All' | 'Active' | 'Completed'
@@ -21,7 +78,7 @@ const App = () => {
     const foo = (buttoName: string, id: number) => {
         if (buttoName !== 'All' && buttoName !== 'Active' && buttoName !== 'Completed') {
             if (buttoName === 'x') {
-                setData(datas.filter(el => el.id !== id)) 
+                setData(datas.filter(el => el.id !== id))
             }
             setButtonName(buttoName)
 
@@ -51,6 +108,7 @@ const App = () => {
 
 export default App
 
+*/
 
 /*
 import React from "react";

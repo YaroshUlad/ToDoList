@@ -1,8 +1,10 @@
 .App {
     padding: 30px;
     display: flex;
+    background-color: greenyellow;
 }
 
 .App > div {
     margin-right: 50px;
+    background-color: greenyellow;
 }

@@ -1,5 +1,63 @@
 import React from "react";
 import {Button} from "./Button";
+import {Checkbox} from "./Checkbox";
+
+
+type ToDoListPropsType = {
+    title: string,
+    callBack: (buttonName: string, buttonID: number) => void
+    data: Array<ObjectsInDataArrayType>,
+    callBackBox: (boxId: number) => void
+}
+
+export type ObjectsInDataArrayType = {
+    id: number,
+    title: string,
+    isDone: boolean
+}
+
+export const ToDoList = (props: ToDoListPropsType) => {
+
+
+    const onClickHandler = (buttonName: string, buttonID: number) => {
+        console.log(buttonName)
+        props.callBack(buttonName, buttonID)
+    }
+
+    const checkBoxHandler = (boxId: number) => {
+        console.log('from todo check', boxId)
+        props.callBackBox(boxId)
+    }
+    return (
+        <div>
+            <h3>{props.title}</h3>
+            <div>
+                <input type="text"/>
+                <Button buttonID={101} buttonTitle={'+'} callBack={onClickHandler}/>
+            </div>
+            <ol>
+                {props.data.map((el, index) => {
+                    return (
+                        <li key={index} value={index + 1}>
+                            <Checkbox boxID={el.id} isDone={el.isDone} callBack={checkBoxHandler}/>
+                            {el.title}
+                            <Button buttonTitle={'x'} callBack={onClickHandler} buttonID={el.id}/>
+                        </li>
+                    )
+                })}
+            </ol>
+            <div>
+                <Button buttonTitle={'All'} callBack={onClickHandler} buttonID={102}/>
+                <Button buttonTitle={'Active'} callBack={onClickHandler} buttonID={103}/>
+                <Button buttonTitle={'Completed'} callBack={onClickHandler} buttonID={104}/>
+            </div>
+        </div>
+    )
+}
+
+
+/*import React from "react";
+import {Button} from "./Button";
 
 type ToDoListPropsType = {
     title: string,
@@ -45,7 +103,7 @@ export const ToDoList = (props: ToDoListPropsType) => {
             </div>
         </div>
     )
-}
+}*/
 
 /*
 import React, {useState} from "react";
