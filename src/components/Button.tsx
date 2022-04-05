@@ -1,5 +1,26 @@
 import React from "react";
 
+export type ButtonPropsType = {
+    buttonTitle: string
+    id: number
+    callBack: (buttonName: string, buttonId: number) => void
+}
+
+export const Button = (props: ButtonPropsType) => {
+    const onClickHandler = () => {
+        props.callBack(props.buttonTitle, props.id)
+    }
+
+    return (
+        <span>
+            <button onClick={onClickHandler}>{props.buttonTitle}</button>
+        </span>
+    )
+}
+
+
+/*import React from "react";
+
 type ButtonPropsTitle = {
     buttonTitle: string,
     callBack: (buttonName: string, buttonID: number) => void,
@@ -11,11 +32,11 @@ export const Button = (props: ButtonPropsTitle) => {
         props.callBack(buttonName, buttonID)
     }
     return (
-        <button/* title={props.buttonTitle}*/ onClick={() => onClickHandler(props.buttonTitle, props.buttonID)}>
+        <button/!* title={props.buttonTitle}*!/ onClick={() => onClickHandler(props.buttonTitle, props.buttonID)}>
             {props.buttonTitle}
         </button>
     )
-}
+}*/
 
 
 /*

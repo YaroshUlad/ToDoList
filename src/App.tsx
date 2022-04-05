@@ -1,4 +1,37 @@
 import React, {useState} from "react";
+import {ObjectsInDataArray, ToDoList} from "./components/ToDoList";
+
+const App = () => {
+    let [data, setData] = useState<Array<ObjectsInDataArray>>([
+        {id: 1, title: "HTML&CSS", isDone: true},
+        {id: 2, title: "JS", isDone: true},
+        {id: 3, title: "ReactJS", isDone: false},
+        {id: 4, title: "Rest API", isDone: false}
+    ]);
+    const deleteButton = (id: number) => {
+        setData(data.filter(el => el.id !== id))
+    }
+
+    const checkBoxHandler = (id: number, isDone: boolean) => {
+        setData(data.map(el => {
+            if (el.id === id) {
+                el.isDone = !el.isDone
+            }
+            return el
+        }))
+    }
+    return (
+        <div>
+            <ToDoList callbackDelete={deleteButton}
+                      title={'What to learn'}
+                      data={data}
+                      callbackCheck={checkBoxHandler}/>
+        </div>
+    )
+}
+export default App
+
+/*import React, {useState} from "react";
 import {ObjectsInDataArrayType, ToDoList} from "./components/ToDoList";
 
 
@@ -51,7 +84,7 @@ const App = () => {
     )
 }
 
-export default App
+export default App*/
 
 
 /*

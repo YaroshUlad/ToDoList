@@ -1,3 +1,73 @@
+import React, {useState} from "react";
+import {Button} from "./Button";
+import {Checkbox} from "./Checkbox";
+
+export type ObjectsInDataArray = {
+    id: number
+    title: string
+    isDone: boolean
+}
+
+export type ToDoListPropsType = {
+    title: string
+    data: Array<ObjectsInDataArray>
+    callbackCheck: (id: number, isDone: boolean) => void
+    callbackDelete: (id: number) => void
+}
+
+export const ToDoList = (props: ToDoListPropsType) => {
+    let data1 = props.data
+    const [filter, setFilter] = useState<'All' | 'Active' | 'Completed'>('All')
+
+    if (filter === 'Active') {
+        data1 = data1.filter(el => !el.isDone)
+    }
+    if (filter === 'Completed') {
+        data1 = data1.filter(el => el.isDone)
+    }
+
+
+    const buttonCallBack = (buttonName: string, buttonId: number) => {
+        if (buttonName === 'All' || buttonName === 'Active' || buttonName === 'Completed') {
+            setFilter(buttonName)
+        }
+        if (buttonName === 'x') {
+            props.callbackDelete(buttonId)
+        }
+    }
+
+    const checkBoxCallBack = (id: number, isDone: boolean) => {
+        props.callbackCheck(id, isDone)
+    }
+
+    return (
+        <div>
+            <h3>{props.title}</h3>
+            <form>
+                <input type="text"/>
+                <input type="button" value={'+'}/>
+            </form>
+            <ol>
+                {data1.map((el, index) => {
+                    return (
+                        <li value={index + 1} key={el.id}>
+                            <Checkbox Id={el.id} isDone={el.isDone} callBack={checkBoxCallBack}/>
+                            <Button buttonTitle={'x'} id={el.id} callBack={buttonCallBack}/>
+                            {el.title}
+                        </li>
+                    )
+                })}
+            </ol>
+            <Button buttonTitle={'All'} id={201} callBack={buttonCallBack}/>
+            <Button buttonTitle={'Active'} id={202} callBack={buttonCallBack}/>
+            <Button buttonTitle={'Completed'} id={203} callBack={buttonCallBack}/>
+
+        </div>
+    )
+}
+
+
+/*
 import React from "react";
 import {Button} from "./Button";
 import {Checkbox} from "./Checkbox";
@@ -28,12 +98,17 @@ export const ToDoList = (props: ToDoListPropsType) => {
         console.log('from todo check', boxId)
         props.callBackBox(boxId)
     }
+
+    const textInputHandler = (value: string) => {
+        console.log(value)
+    }
     return (
         <div>
             <h3>{props.title}</h3>
             <div>
-                <input type="text"/>
-                <Button buttonID={101} buttonTitle={'+'} callBack={onClickHandler}/>
+                <input id={'testInput'} type='text'/>
+                <input type="button" value={'+'}/>
+                {/!*<Button buttonID={101} buttonTitle={'+'} callBack={onClickHandler}/>*!/}
             </div>
             <ol>
                 {props.data.map((el, index) => {
@@ -54,6 +129,7 @@ export const ToDoList = (props: ToDoListPropsType) => {
         </div>
     )
 }
+*/
 
 
 /*import React from "react";
