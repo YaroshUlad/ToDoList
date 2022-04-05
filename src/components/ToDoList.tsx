@@ -1,4 +1,92 @@
 import React, {useState} from "react";
+import {TextInput} from "./TextInput";
+import {Button} from "./Button";
+import {Checkbox} from "./Checkbox";
+
+type ObjectInDataType = {
+    id: number
+    title: string
+    isDone: boolean
+}
+type ToDoListPropsType = {
+    title: string
+    ID: number
+    data: Array<ObjectInDataType>
+    deleteTask: (buttonTitle: string, id: number) => void
+    checkBox: (checkBoxId: number) => void
+    addTask: (textInput: string) => void
+}
+
+export const ToDoList = (props: ToDoListPropsType) => {
+
+    // ___________________get copy Data for filter_______________
+    let filteredData = props.data
+    // ____________________ set filter_______________________
+    const [filter, setFilter] = useState<'All' | 'Active' | 'Completed'>('All')
+
+    const setFilterButton = (buttonTitle: string, ID: number) => {
+        if (buttonTitle === 'All' || buttonTitle === 'Active' || buttonTitle === 'Completed') {
+            setFilter(buttonTitle)
+        }
+    }
+    if (filter === 'Active') {
+        filteredData = props.data.filter(el => !el.isDone)
+    }
+    if (filter === 'Completed') {
+        filteredData = props.data.filter(el => el.isDone)
+    }
+    //______________________lift info about checkbox changes to App__________________
+
+    const checkBoxChanges = (checkBoxId: number) => {
+        props.checkBox(checkBoxId)
+    }
+
+    //____________________Create state for Text input_________________
+    const [inputValue, setInputValue] = useState<string>('')
+    const inputValueHandler = (inputValue: string) => {
+        setInputValue(inputValue)
+    }
+    //_____________________lift state to App for Data's state_____________
+    const addInputValueToData = () => {
+        setInputValue('')
+        props.addTask(inputValue)
+    }
+
+
+    return (
+        <div>
+            <h3>{props.title}</h3>
+            <div>
+                <TextInput callBack={inputValueHandler} value={inputValue}/>
+                <Button buttonID={props.ID + 101} buttonTitle={"+"} callBack={addInputValueToData}/>
+            </div>
+            <ol>
+                {filteredData.map((el, index) => {
+                    return (
+                        <li value={index + 1} key={el.id}>
+                            <Checkbox isDone={el.isDone}
+                                      callBack={() => checkBoxChanges(el.id)}/>
+                            <Button buttonID={el.id}
+                                    buttonTitle={'x'}
+                                    callBack={props.deleteTask}/>
+                            {el.title}
+                        </li>
+                    )
+                })}
+            </ol>
+            <div>
+                <Button buttonID={props.ID + 201} buttonTitle={'All'} callBack={setFilterButton}/>
+                <Button buttonID={props.ID + 202} buttonTitle={'Active'} callBack={setFilterButton}/>
+                <Button buttonID={props.ID + 203} buttonTitle={'Completed'} callBack={setFilterButton}/>
+            </div>
+
+
+        </div>
+    )
+}
+
+
+/*import React, {useState} from "react";
 import {Button} from "./Button";
 import {Checkbox} from "./Checkbox";
 
@@ -64,7 +152,7 @@ export const ToDoList = (props: ToDoListPropsType) => {
 
         </div>
     )
-}
+}*/
 
 
 /*

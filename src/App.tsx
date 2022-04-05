@@ -1,35 +1,54 @@
 import React, {useState} from "react";
-import {ObjectsInDataArray, ToDoList} from "./components/ToDoList";
+import {ToDoList} from "./components/ToDoList";
+
 
 const App = () => {
-    let [data, setData] = useState<Array<ObjectsInDataArray>>([
+    let [data, setData] = useState([
         {id: 1, title: "HTML&CSS", isDone: true},
         {id: 2, title: "JS", isDone: true},
         {id: 3, title: "ReactJS", isDone: false},
         {id: 4, title: "Rest API", isDone: false}
-    ]);
-    const deleteButton = (id: number) => {
+    ])
+
+    const deleteTaskFromData = (buttonTitle: string, id: number) => {
         setData(data.filter(el => el.id !== id))
     }
 
-    const checkBoxHandler = (id: number, isDone: boolean) => {
-        setData(data.map(el => {
-            if (el.id === id) {
-                el.isDone = !el.isDone
+    const checkBoxIsDoneChanger = (checkBoxId: number) => {
+        setData(data.map((el) => {
+                    if (el.id === checkBoxId) {
+                        el.isDone = !el.isDone
+                    }
+                    return el
+                }
+            )
+        )
+    }
+
+    const inputStateForChangeDataState = (textInput: string) => {
+        let idForNewTask = 0;
+        data.map(el => {
+            if (el.id >= idForNewTask) {
+                idForNewTask = el.id
             }
             return el
-        }))
+        })
+        let newTask = {id: idForNewTask + 1, title: textInput, isDone: false}
+        setData([...data, newTask])
     }
+
     return (
         <div>
-            <ToDoList callbackDelete={deleteButton}
-                      title={'What to learn'}
+            <ToDoList addTask={inputStateForChangeDataState}
+                      checkBox={checkBoxIsDoneChanger}
+                      ID={1000} deleteTask={deleteTaskFromData}
                       data={data}
-                      callbackCheck={checkBoxHandler}/>
+                      title={'What to Learn'}/>
         </div>
     )
 }
 export default App
+
 
 /*import React, {useState} from "react";
 import {ObjectsInDataArrayType, ToDoList} from "./components/ToDoList";

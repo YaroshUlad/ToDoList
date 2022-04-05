@@ -1,5 +1,26 @@
 import React from "react";
 
+type CheckboxPropsType = {
+    callBack: () => void
+    isDone: boolean
+}
+
+export const Checkbox = (props: CheckboxPropsType) => {
+
+    const onChangeHandler = () => {
+        props.callBack()
+    }
+
+    return (
+        <>
+            <input type="checkbox" checked={props.isDone} onChange={onChangeHandler}/>
+        </>
+    )
+}
+
+
+/*import React from "react";
+
 export type CheckBoxType = {
     isDone: boolean
     Id: number
@@ -17,7 +38,7 @@ export const Checkbox = (props: CheckBoxType) => {
             <input type="checkbox" checked={props.isDone} onChange={onChangeHandler}/>
         </>
     )
-}
+}*/
 
 
 /*
