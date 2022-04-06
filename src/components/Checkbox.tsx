@@ -1,5 +1,8 @@
 import React from "react";
 
+
+/*import React from "react";
+
 type CheckboxPropsType = {
     callBack: () => void
     isDone: boolean
@@ -16,7 +19,7 @@ export const Checkbox = (props: CheckboxPropsType) => {
             <input type="checkbox" checked={props.isDone} onChange={onChangeHandler}/>
         </>
     )
-}
+}*/
 
 
 /*import React from "react";

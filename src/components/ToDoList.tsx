@@ -1,3 +1,69 @@
+import React, {ChangeEvent, useState, KeyboardEvent} from "react";
+import {FilterButtonType, ObjectsInTasksType} from "../App";
+import {Button} from "./Button";
+
+type ToDoListPropsType = {
+    data: Array<ObjectsInTasksType>
+    title: string
+    addNewTaskFromInput: (value: string) => void
+    changeIsDoneProperty: (id: number) => void
+    deleteTask: (id: number) => void
+    setFilter: (filterName: FilterButtonType) => void
+}
+
+export const ToDoList = (props: ToDoListPropsType) => {
+    const [inputTaskValue, setInputTaskValue] = useState('')
+    const onChangeInputTaskHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setInputTaskValue(event.currentTarget.value)
+    }
+    const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.charCode === 13) {
+            props.addNewTaskFromInput(inputTaskValue)
+            setInputTaskValue('')
+        }
+    }
+    const onClickButtonHandler = () => {
+        props.addNewTaskFromInput(inputTaskValue)
+        setInputTaskValue('')
+    }
+
+    return (
+        <div>
+            <h3>{props.title}</h3>
+            <div>
+                <input onChange={onChangeInputTaskHandler}
+                       onKeyPress={onKeyPressHandler}
+                       value={inputTaskValue}/>
+                <input type="button" value={'+'} onClick={onClickButtonHandler}/>
+            </div>
+            <ol>
+                {props.data.map((el, index) => {
+                    const checkBoxOnChangeHandler = () => {
+                        props.changeIsDoneProperty(el.id)
+                    }
+                    const onClickDeleteTaskHandler = () => {
+                        props.deleteTask(el.id)
+                    }
+                    return (
+                        <li key={el.id} value={index + 1}>
+                            <input type="checkbox" checked={el.isDone} onChange={checkBoxOnChangeHandler}/>
+                            <input type="button" onClick={onClickDeleteTaskHandler} value={'x'}/>
+                            {el.title}
+                        </li>
+                    )
+                })}
+            </ol>
+            <div>
+                <Button buttonTitile={'All'} callBack={() => props.setFilter('All')}/>
+                <Button buttonTitile={'Active'} callBack={() => props.setFilter('Active')}/>
+                <Button buttonTitile={'Completed'} callBack={() => props.setFilter('Completed')}/>
+            </div>
+        </div>
+    )
+}
+
+
+/*
 import React, {useState} from "react";
 import {TextInput} from "./TextInput";
 import {Button} from "./Button";
@@ -84,6 +150,7 @@ export const ToDoList = (props: ToDoListPropsType) => {
         </div>
     )
 }
+*/
 
 
 /*import React, {useState} from "react";

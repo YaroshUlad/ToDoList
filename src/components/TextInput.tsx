@@ -1,4 +1,7 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
+
+
+/*import React, {ChangeEvent} from "react";
 
 type TextInputPropsType = {
     value: string
@@ -15,5 +18,7 @@ export const TextInput = (props: TextInputPropsType) => {
         <span>
             <input value={props.value} onChange={onChangeInputHandler}/>
         </span>
-    )
+   )
 }
+
+ */

@@ -1,6 +1,80 @@
 import React, {useState} from "react";
 import {ToDoList} from "./components/ToDoList";
 
+const arr: Array<ObjectsInTasksType> = [
+    {id: 1, title: "HTML&CSS", isDone: true},
+    {id: 2, title: "JS", isDone: true},
+    {id: 3, title: "ReactJS", isDone: false},
+    {id: 4, title: "Rest API", isDone: false}
+]
+
+export type ObjectsInTasksType = {
+    id: number
+    title: string
+    isDone: boolean
+}
+export type FilterButtonType = 'All' | 'Active' | 'Completed'
+//_________________________________________________________________________________________
+const App = () => {
+    const [data, setData] = useState<Array<ObjectsInTasksType>>(arr)
+
+
+    const addNewTaskFromInput = (value: string) => {
+        let idForNewTask = 0;
+        data.map(el => {
+            if (el.id >= idForNewTask) {
+                idForNewTask = el.id
+            }
+            return el
+        })
+        let newTask = {id: idForNewTask + 1, title: value, isDone: false}
+        setData([newTask, ...data])
+    }
+
+    const [filter, setFilter] = useState<FilterButtonType>('All')
+
+    const changeIsDoneProperty = (id: number) => {
+        setData(data.map(el => {
+            if (el.id === id) {
+                el.isDone = !el.isDone
+            }
+            return el
+        }))
+    }
+
+    const deleteTask = (id: number) => {
+        setData(data.filter(el => el.id !== id))
+    }
+
+    const setFilterButton = (filterTitle: FilterButtonType) => {
+        setFilter(filterTitle)
+    }
+    let filteredData = data
+    if (filter === 'Active') {
+        filteredData = data.filter(el => !el.isDone)
+    }
+    if (filter === 'Completed') {
+        filteredData = data.filter(el => el.isDone)
+    }
+
+
+    return (
+        <div>
+            <ToDoList setFilter={setFilterButton}
+                      deleteTask={deleteTask}
+                      data={filteredData}
+                      addNewTaskFromInput={addNewTaskFromInput}
+                      changeIsDoneProperty={changeIsDoneProperty}
+                      title={'What to Learn'}/>
+        </div>
+    )
+}
+
+export default App
+/*
+import React, {useState} from "react";
+import {ToDoList} from "./components/ToDoList";
+
 
 const App = () => {
     let [data, setData] = useState([
@@ -48,6 +122,7 @@ const App = () => {
     )
 }
 export default App
+*/
 
 
 /*import React, {useState} from "react";

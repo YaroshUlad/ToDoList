@@ -1,5 +1,24 @@
 import React from "react";
 
+type ButtonType = {
+    buttonTitile: string
+    callBack: () => void
+}
+
+export const Button = (props: ButtonType) => {
+    const onClickButtonHandler = () => {
+        props.callBack()
+    }
+    return (
+        <span>
+            <button onClick={onClickButtonHandler}>{props.buttonTitile}</button>
+        </span>
+    )
+}
+
+
+/*
+import React from "react";
 
 type ButtonPropsType = {
     buttonTitle: string
@@ -19,6 +38,7 @@ export const Button = (props: ButtonPropsType) => {
         </span>
     )
 }
+*/
 
 
 /*
