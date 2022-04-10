@@ -13,6 +13,80 @@ export type ObjectsInTasksType = {
     title: string
     isDone: boolean
 }
+export type FilterButtonType = 'All' | 'Completed' | 'Active'
+
+const App = () => {
+    const [data, setData] = useState<Array<ObjectsInTasksType>>(arr)
+    const [filter, setFilter] = useState<FilterButtonType>('All')
+
+    const addNewTask = (taskTitle: string) => {
+        let idCount = 0
+        data.map(el => {
+            if (el.id >= idCount) {
+                idCount = el.id
+            }
+            return el
+        })
+        setData([
+            {
+                id: idCount + 1,
+                title: taskTitle,
+                isDone: false
+            }, ...data
+        ])
+    }
+    const checkBoxOnChange = (id: number) => {
+        setData(data.map(el => {
+            if (el.id === id) {
+                el.isDone = !el.isDone
+            }
+            return el
+        }))
+    }
+    const filterButton = (buttonName: FilterButtonType) => {
+        setFilter(buttonName)
+    }
+    const deleteTask = (id: number) => {
+        setData(data.filter(el => el.id !== id))
+    }
+    let filteredData = data
+    if (filter === 'Active') {
+        filteredData = data.filter(el => !el.isDone)
+    }
+    if (filter === 'Completed') {
+        filteredData = data.filter(el => el.isDone)
+    }
+    return (
+        <div>
+            App
+            <ToDoList deleteTask={deleteTask}
+                      filterButton={filterButton}
+                      checkBoxOnChange={checkBoxOnChange}
+                      data={filteredData}
+                      addNewTask={addNewTask}
+                      title={'What to learn'}/>
+        </div>
+    )
+}
+
+export default App
+
+
+/*import React, {useState} from "react";
+import {ToDoList} from "./components/ToDoList";
+
+const arr: Array<ObjectsInTasksType> = [
+    {id: 1, title: "HTML&CSS", isDone: true},
+    {id: 2, title: "JS", isDone: true},
+    {id: 3, title: "ReactJS", isDone: false},
+    {id: 4, title: "Rest API", isDone: false}
+]
+
+export type ObjectsInTasksType = {
+    id: number
+    title: string
+    isDone: boolean
+}
 export type FilterButtonType = 'All' | 'Active' | 'Completed'
 //_________________________________________________________________________________________
 const App = () => {
@@ -70,7 +144,7 @@ const App = () => {
     )
 }
 
-export default App
+export default App*/
 /*
 import React, {useState} from "react";
 import {ToDoList} from "./components/ToDoList";
