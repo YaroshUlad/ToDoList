@@ -1,5 +1,6 @@
 import React from "react";
 import {v1} from "uuid";
+import {Button} from "./components/Button";
 
 export type ObjectsInTaskArrayType = {
     id: string
@@ -18,6 +19,7 @@ const App = () => {
     return (
         <div>
             App
+            <Button buttonTitle={'+'} callBack={() => console.log('aa')}/>
         </div>
     )
 }
