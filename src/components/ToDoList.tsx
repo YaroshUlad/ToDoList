@@ -6,6 +6,8 @@ type ToDoListPropsType = {
     title: string
     data: Array<ObjectsInTaskArrayType>
     addNewTask: (newTaskValue: string) => void
+    deleteTask: (taskId: string) => void
+    isDoneChanger: (taskId: string, newIsDone: boolean) => void
 }
 
 export const ToDoList = (props: ToDoListPropsType) => {
@@ -20,6 +22,7 @@ export const ToDoList = (props: ToDoListPropsType) => {
 
     const onClickHandlerForAddNewTask = () => {
         if (newTaskValue.trim() === '') {
+            setNewTaskValue('')
             return setError('field is required')
         }
         props.addNewTask(newTaskValue.trim())
@@ -36,20 +39,30 @@ export const ToDoList = (props: ToDoListPropsType) => {
         <div>
             <h3>{props.title}</h3>
             <div>
-                <input onKeyPress={onKeyPressHandler}
+                <input className={error ? 'error' : ''} onKeyPress={onKeyPressHandler}
                        type="text"
                        onChange={onChangeHandler}
                        value={newTaskValue}/>
                 <input type="button" value={'+'} onClick={onClickHandlerForAddNewTask}/>
-                <div className={error ? 'error' : ''}>{error}</div>
+                <div className={error ? 'error-message' : ''}>{error}</div>
             </div>
             <div>
                 <ol>
                     {props.data.map((el, index) => {
+                        const onChangeCheckBoxHandler = (event: ChangeEvent<HTMLInputElement>) => {
+                            props.isDoneChanger(el.id, event.currentTarget.checked)
+                        }
+                        const onClickHandlerForDeleteTask = () => {
+                            props.deleteTask(el.id)
+                        }
                         return (
-                            <li key={el.id} value={index + 1}>
-                                <input type="checkbox" checked={el.isDone}/>
-                                <input type="button" value={'x'}/>
+                            <li key={el.id} value={index + 1} className={el.isDone ? 'completed' : ''}>
+                                <input type="checkbox"
+                                       checked={el.isDone}
+                                       onChange={onChangeCheckBoxHandler}/>
+                                <input type="button"
+                                       value={'x'}
+                                       onClick={onClickHandlerForDeleteTask}/>
                                 {el.title}
                             </li>
                         )

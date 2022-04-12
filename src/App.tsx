@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import {v1} from "uuid";
-import {Button} from "./components/Button";
+import './App.css'
 import {ToDoList} from "./components/ToDoList";
 
 export type ObjectsInTaskArrayType = {
@@ -17,15 +17,31 @@ const arr: Array<ObjectsInTaskArrayType> = [
 ]
 
 const App = () => {
+    const [data, setData] = useState<Array<ObjectsInTaskArrayType>>(arr)
 
     const addNewTask = (newTaskValue: string) => {
         console.log(newTaskValue, ' from APPs')
+        let newTask = {id: v1(), title: newTaskValue, isDone: false}
+        setData([newTask, ...data])
+    }
+    const isDoneChanger = (taskId: string, newIsDone: boolean) => {
+        setData(data.map(el => {
+            if (el.id === taskId) {
+                el.isDone = newIsDone
+            }
+            return el
+        }))
+    }
+    const deleteTask = (taskId: string) => {
+
     }
 
     return (
         <div>
-            <ToDoList addNewTask={addNewTask}
-                      data={arr}
+            <ToDoList isDoneChanger={isDoneChanger}
+                      deleteTask={deleteTask}
+                      addNewTask={addNewTask}
+                      data={data}
                       title={'What to learn'}/>
         </div>
     )

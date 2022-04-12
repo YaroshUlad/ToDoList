@@ -8,5 +8,16 @@
 .App > div {
     margin: 50px;
     background-color: greenyellow;
-    padding: 30px;
+}
+
+.error {
+    border: red 1px solid;
+}
+
+.error-message {
+    color: red;
+}
+
+.completed {
+    opacity: 75%;
 }
