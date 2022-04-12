@@ -1,4 +1,30 @@
-import React, {useState} from "react";
+import React from "react";
+import {v1} from "uuid";
+
+export type ObjectsInTaskArrayType = {
+    id: string
+    title: string
+    isDone: boolean
+}
+
+const arr: Array<ObjectsInTaskArrayType> = [
+    {id: v1(), title: "HTML&CSS", isDone: true},
+    {id: v1(), title: "JS", isDone: true},
+    {id: v1(), title: "ReactJS", isDone: false},
+    {id: v1(), title: "Rest API", isDone: false}
+]
+
+const App = () => {
+    return (
+        <div>
+            App
+        </div>
+    )
+}
+export default App
+
+
+/*import React, {useState} from "react";
 import {ToDoList} from "./components/ToDoList";
 
 const arr: Array<ObjectsInTasksType> = [
@@ -69,7 +95,7 @@ const App = () => {
     )
 }
 
-export default App
+export default App*/
 
 
 /*import React, {useState} from "react";
