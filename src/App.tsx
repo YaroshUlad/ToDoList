@@ -19,7 +19,8 @@ const arr: Array<ObjectsInTaskArrayType> = [
 const App = () => {
     return (
         <div>
-            <ToDoList title={'What to learn'}/>
+            <ToDoList data={arr}
+                      title={'What to learn'}/>
         </div>
     )
 }

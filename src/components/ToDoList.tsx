@@ -1,7 +1,10 @@
 import React from "react";
+import {ObjectsInTaskArrayType} from "../App";
+import {Button} from "./Button";
 
 type ToDoListPropsType = {
     title: string
+    data: Array<ObjectsInTaskArrayType>
 }
 
 export const ToDoList = (props: ToDoListPropsType) => {
@@ -11,6 +14,27 @@ export const ToDoList = (props: ToDoListPropsType) => {
             <div>
                 <input type="text"/>
                 <input type="button" value={'+'}/>
+            </div>
+            <div>
+                <ol>
+                    {props.data.map((el, index) => {
+                        return (
+                            <li key={el.id} value={index + 1}>
+                                <input type="checkbox" checked={el.isDone}/>
+                                <input type="button" value={'x'}/>
+                                {el.title}
+                            </li>
+                        )
+                    })}
+                </ol>
+            </div>
+            <div>
+                <Button buttonTitle={'All'} callBack={() => {
+                }}/>
+                <Button buttonTitle={'Active'} callBack={() => {
+                }}/>
+                <Button buttonTitle={'Completed'} callBack={() => {
+                }}/>
             </div>
         </div>
     )
