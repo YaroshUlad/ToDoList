@@ -11,29 +11,37 @@ type ToDoListPropsType = {
 export const ToDoList = (props: ToDoListPropsType) => {
     const [newTaskValue, setNewTaskValue] = useState<string>('')
 
+    const [error, setError] = useState<string | null>(null)
+
     const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+
         setNewTaskValue(event.currentTarget.value)
     }
 
     const onClickHandlerForAddNewTask = () => {
-        props.addNewTask(newTaskValue)
+        if (newTaskValue.trim() === '') {
+            return setError('field is required')
+        }
+        props.addNewTask(newTaskValue.trim())
         setNewTaskValue('')
     }
 
     const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        setError(null)
         if (event.key === 'Enter') {
-            props.addNewTask(newTaskValue)
-            setNewTaskValue('')
+            onClickHandlerForAddNewTask()
         }
     }
     return (
         <div>
             <h3>{props.title}</h3>
             <div>
-                <input onKeyPress={onKeyPressHandler} type="text"
+                <input onKeyPress={onKeyPressHandler}
+                       type="text"
                        onChange={onChangeHandler}
                        value={newTaskValue}/>
                 <input type="button" value={'+'} onClick={onClickHandlerForAddNewTask}/>
+                <div className={error ? 'error' : ''}>{error}</div>
             </div>
             <div>
                 <ol>

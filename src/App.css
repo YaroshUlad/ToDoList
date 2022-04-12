@@ -6,6 +6,7 @@
 }
 
 .App > div {
-    margin-right: 50px;
+    margin: 50px;
     background-color: greenyellow;
+    padding: 30px;
 }
