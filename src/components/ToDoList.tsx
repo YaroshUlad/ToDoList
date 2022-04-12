@@ -53,7 +53,7 @@ export const ToDoList = (props: ToDoListPropsType) => {
     }
 
     return (
-        <div>
+        <div className={'ToDoListWrapper'}>
             <h3>{props.title}</h3>
             <div>
                 <input className={error ? 'error' : ''} onKeyPress={onKeyPressHandler}

@@ -37,7 +37,7 @@ const App = () => {
     }
 
     return (
-        <div>
+        <div className={'AppWrapper'}>
             <ToDoList isDoneChanger={isDoneChanger}
                       deleteTask={deleteTask}
                       addNewTask={addNewTask}
