@@ -1,6 +1,7 @@
 import React from "react";
 import {v1} from "uuid";
 import {Button} from "./components/Button";
+import {ToDoList} from "./components/ToDoList";
 
 export type ObjectsInTaskArrayType = {
     id: string
@@ -20,6 +21,7 @@ const App = () => {
         <div>
             App
             <Button buttonTitle={'+'} callBack={() => console.log('aa')}/>
+            <ToDoList/>
         </div>
     )
 }
