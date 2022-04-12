@@ -1,8 +1,10 @@
 import React from "react";
+import {FilterType} from "./ToDoList";
 
 type ButtonPropsType = {
     buttonTitle: string
     callBack: () => void
+    classNameActivator: FilterType
 }
 
 export const Button = (props: ButtonPropsType) => {
@@ -11,7 +13,8 @@ export const Button = (props: ButtonPropsType) => {
     }
     return (
         <span>
-            <button onClick={onClickHandler}>{props.buttonTitle}</button>
+            <button className={props.classNameActivator === props.buttonTitle ? 'filter-active' : 'filter'}
+                    onClick={onClickHandler}>{props.buttonTitle}</button>
         </span>
     )
 }

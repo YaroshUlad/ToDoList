@@ -10,6 +10,8 @@ type ToDoListPropsType = {
     isDoneChanger: (taskId: string, newIsDone: boolean) => void
 }
 
+export type FilterType = 'All' | 'Active' | 'Completed'
+
 export const ToDoList = (props: ToDoListPropsType) => {
     const [newTaskValue, setNewTaskValue] = useState<string>('')
 
@@ -35,6 +37,21 @@ export const ToDoList = (props: ToDoListPropsType) => {
             onClickHandlerForAddNewTask()
         }
     }
+
+    const [filter, setFilter] = useState<FilterType>('All')
+
+    const changeFilter = (filterName: FilterType) => {
+        setFilter(filterName)
+    }
+
+    let filteredData = props.data
+    if (filter === 'Active') {
+        filteredData = props.data.filter(el => !el.isDone)
+    }
+    if (filter === 'Completed') {
+        filteredData = props.data.filter(el => el.isDone)
+    }
+
     return (
         <div>
             <h3>{props.title}</h3>
@@ -48,7 +65,7 @@ export const ToDoList = (props: ToDoListPropsType) => {
             </div>
             <div>
                 <ol>
-                    {props.data.map((el, index) => {
+                    {filteredData.map((el, index) => {
                         const onChangeCheckBoxHandler = (event: ChangeEvent<HTMLInputElement>) => {
                             props.isDoneChanger(el.id, event.currentTarget.checked)
                         }
@@ -70,12 +87,10 @@ export const ToDoList = (props: ToDoListPropsType) => {
                 </ol>
             </div>
             <div>
-                <Button buttonTitle={'All'} callBack={() => {
-                }}/>
-                <Button buttonTitle={'Active'} callBack={() => {
-                }}/>
-                <Button buttonTitle={'Completed'} callBack={() => {
-                }}/>
+                <Button classNameActivator={filter} buttonTitle={'All'} callBack={() => changeFilter('All')}/>
+                <Button classNameActivator={filter} buttonTitle={'Active'} callBack={() => changeFilter('Active')}/>
+                <Button classNameActivator={filter} buttonTitle={'Completed'}
+                        callBack={() => changeFilter('Completed')}/>
             </div>
         </div>
     )

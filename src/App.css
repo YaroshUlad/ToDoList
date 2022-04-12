@@ -21,3 +21,13 @@
 .completed {
     opacity: 75%;
 }
+
+.filter-active {
+    background-color: fuchsia;
+    border-radius: 5px;
+}
+
+.filter {
+    background-color: aqua;
+    border-radius: 5px;
+}
