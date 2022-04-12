@@ -17,9 +17,15 @@ const arr: Array<ObjectsInTaskArrayType> = [
 ]
 
 const App = () => {
+
+    const addNewTask = (newTaskValue: string) => {
+        console.log(newTaskValue, ' from APPs')
+    }
+
     return (
         <div>
-            <ToDoList data={arr}
+            <ToDoList addNewTask={addNewTask}
+                      data={arr}
                       title={'What to learn'}/>
         </div>
     )

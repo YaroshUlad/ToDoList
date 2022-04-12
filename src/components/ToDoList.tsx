@@ -1,19 +1,39 @@
-import React from "react";
+import React, {ChangeEvent, KeyboardEvent, useState} from "react";
 import {ObjectsInTaskArrayType} from "../App";
 import {Button} from "./Button";
 
 type ToDoListPropsType = {
     title: string
     data: Array<ObjectsInTaskArrayType>
+    addNewTask: (newTaskValue: string) => void
 }
 
 export const ToDoList = (props: ToDoListPropsType) => {
+    const [newTaskValue, setNewTaskValue] = useState<string>('')
+
+    const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setNewTaskValue(event.currentTarget.value)
+    }
+
+    const onClickHandlerForAddNewTask = () => {
+        props.addNewTask(newTaskValue)
+        setNewTaskValue('')
+    }
+
+    const onKeyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            props.addNewTask(newTaskValue)
+            setNewTaskValue('')
+        }
+    }
     return (
         <div>
             <h3>{props.title}</h3>
             <div>
-                <input type="text"/>
-                <input type="button" value={'+'}/>
+                <input onKeyPress={onKeyPressHandler} type="text"
+                       onChange={onChangeHandler}
+                       value={newTaskValue}/>
+                <input type="button" value={'+'} onClick={onClickHandlerForAddNewTask}/>
             </div>
             <div>
                 <ol>
