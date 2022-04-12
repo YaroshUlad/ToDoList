@@ -1,9 +1,17 @@
 import React from "react";
 
-export const ToDoList = () => {
+type ToDoListPropsType = {
+    title: string
+}
+
+export const ToDoList = (props: ToDoListPropsType) => {
     return (
         <div>
-            todo
+            <h3>{props.title}</h3>
+            <div>
+                <input type="text"/>
+                <input type="button" value={'+'}/>
+            </div>
         </div>
     )
 }

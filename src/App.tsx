@@ -19,9 +19,7 @@ const arr: Array<ObjectsInTaskArrayType> = [
 const App = () => {
     return (
         <div>
-            App
-            <Button buttonTitle={'+'} callBack={() => console.log('aa')}/>
-            <ToDoList/>
+            <ToDoList title={'What to learn'}/>
         </div>
     )
 }
