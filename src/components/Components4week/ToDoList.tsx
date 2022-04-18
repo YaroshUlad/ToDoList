@@ -3,6 +3,7 @@ import {FullInput4Week} from "./FullInput/FullInput4Week";
 import {Tasks4Week} from "./Tasks/Tasks4Week";
 import {ObjectsInTaskArrayType} from "./App4Week";
 import {UniButton} from "./UniButton/UniButton";
+import s from './ToDoList.module.css'
 
 
 type ToDoList4weekPropsType = {
@@ -38,9 +39,11 @@ export const ToDoList = (props: ToDoList4weekPropsType) => {
             <Tasks4Week deleteTask={deleteTask}
                         checkboxChanger={checkboxChanger}
                         data={filteredTasks}/>
-            <UniButton title={'All'} callBack={() => setFilter('All')}/>
-            <UniButton title={'Active'} callBack={() => setFilter('Active')}/>
-            <UniButton title={'Completed'} callBack={() => setFilter('Completed')}/>
+            <div>
+                <UniButton title={'All'} callBack={() => setFilter('All')}/>
+                <UniButton title={'Active'} callBack={() => setFilter('Active')}/>
+                <UniButton title={'Completed'} callBack={() => setFilter('Completed')}/>
+            </div>
 
 
         </div>
