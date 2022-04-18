@@ -1,0 +1,13 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.errors {
+    color: red;
+    border-color: red;
+}
+
+.errorButton {
+    background-color: #c44c4c;
+}
