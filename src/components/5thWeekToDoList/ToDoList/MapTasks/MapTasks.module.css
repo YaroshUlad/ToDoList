@@ -1,0 +1,17 @@
+.wrapper {
+    padding-top: 10px;
+}
+
+.lists {
+    display: flex;
+    padding: 5px 15px;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.lists div {
+    flex-grow: 1;
+    text-align: center;
+
+}

@@ -1,12 +1,15 @@
 import React, {ChangeEvent, KeyboardEvent, DetailedHTMLProps, InputHTMLAttributes, useState} from 'react';
+import s from './Input.module.css'
 
 type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
-type InputPropsType = {}
+type InputPropsType = {
+    newTaskName: (value: string) => void
+}
 type FullInputPropsType = DefaultInputPropsType & InputPropsType
 
 
 export const Input: React.FC<FullInputPropsType> = ({
-                                                        type,
+                                                        type, newTaskName, ...restProps
                                                     }) => {
 
     const [value, setValue] = useState<string>('')
@@ -26,20 +29,23 @@ export const Input: React.FC<FullInputPropsType> = ({
 
     const onClickHandler = () => {
         if (value.trim()) {
-            console.log(value.trim())
+            newTaskName(value.trim()) // ________________ sent to toDoList new Task name
             setValue('')
         } else {
             setError('Please enter new Task')
         }
     }
     return (
-        <div>
-            <div className={''}>
-                <input onKeyPress={onKeyPressHandler} onChange={onChangeHandler} value={value} type="text"/>
-                {error && <span>{error}</span>}
+        <div className={s.inputWrapper}>
+            <div className={s.inputArea}>
+                <input className={error ? s.inputError : s.input} onKeyPress={onKeyPressHandler}
+                       onChange={onChangeHandler} value={value} type="text"/>
+                {error && <span className={s.error}>{error}</span>}
             </div>
             <div>
-                <button onClick={onClickHandler}>+</button>
+                <button disabled={error ? true : false} className={error ? s.buttonError : s.button}
+                        onClick={onClickHandler}>+
+                </button>
             </div>
         </div>
     );

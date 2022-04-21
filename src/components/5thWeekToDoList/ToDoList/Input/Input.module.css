@@ -1,0 +1,29 @@
+.inputWrapper {
+    display: flex;
+}
+
+.inputArea {
+    display: flex;
+    flex-direction: column;
+    margin-right: 3px;
+    align-items: center;
+    justify-content: center;
+}
+
+.error {
+    color: red;
+}
+
+.inputError {
+    border-color: red;
+}
+
+.buttonError {
+    background-color: #c44c4c;
+    border-radius: 5px;
+}
+
+.button {
+    border-radius: 5px;
+    font-weight: bold;
+}
