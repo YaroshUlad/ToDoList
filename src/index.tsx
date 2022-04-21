@@ -4,10 +4,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import App4Week from "./components/Components4week/App4Week";
+import App5ThWeek from "./components/5thWeekToDoList/App5ThWeek";
 
 ReactDOM.render(
     <React.StrictMode>
-        <App4Week/>
+        <App5ThWeek/>
     </React.StrictMode>,
     document.getElementById('root')
 );
