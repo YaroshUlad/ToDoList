@@ -1,53 +1,65 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import {Input} from "./Input/Input";
 import {MapTasks} from "./MapTasks/MapTasks";
 import {v1} from "uuid";
 import {ObjectsInTaskArrayType} from "../../Components4week/App4Week";
 import {Button} from "./Button/Button";
+import s from './ToDolist.module.css'
 
 type ToDoListPropsType = {
     toDoListTitle: string
-    /*data: Array<ObjectsInTaskArrayType>
-    id: string*/
-
+    data: Array<ObjectsInTaskArrayType>
+    tdid: string
+    addNewTask: (newTaskValue: string, toDoListId: string) => void
+    isDonePropertyChanger: (newIsDone: boolean, taskId: string, toDolistId: string) => void
+    deleteTask: (taskId: string, toDoListId: string) => void
+    deleteList: (toDoListId: string) => void
 }
 
 export const ToDoList: React.FC<ToDoListPropsType> = ({
-                                                          toDoListTitle
+                                                          toDoListTitle,
+                                                          tdid,
+                                                          data,
+                                                          addNewTask, isDonePropertyChanger,
+                                                          deleteTask, deleteList
                                                       }) => {
+    const [filterValue, setFilterValue] = useState<'All' | 'Active' | 'Completed'>('All')
+    let filteredData = data
+    if (filterValue === 'Active') {
+        filteredData = data.filter(el => !el.isDone)
+    }
+    if (filterValue === 'Completed') {
+        filteredData = data.filter(el => el.isDone)
+    }
+
     const newTaskNameHandler = (value: string) => {
-        console.log(value, ' from todo') // ___________ receive new Task name from input
+        addNewTask(value, tdid)
     }
 
     const checkBoxOnChange = (e: boolean, id: string) => {
-        console.log(e, ' from todo')
+        isDonePropertyChanger(e, id, tdid)
     }
     const deleteTaskId = (id: string) => {
-        console.log(id, 'from todo')
+        deleteTask(id, tdid)
     }
-    const setFilterValue = (filterValue: 'All' | 'Active' | 'Completed') => {
-        console.log(filterValue, ' filetValue from Todo')
-    }
-
 
     return (
-        <div>
+        <div className={s.todolistWrap}>
+            <Button onClick={() => deleteList(tdid)} value={'x'}/>
             <h3>{toDoListTitle}</h3>
             <Input newTaskName={newTaskNameHandler}/>
-            <MapTasks deleteTaskHandler={deleteTaskId} checkBoxOnChangeCallBack={checkBoxOnChange} data={arr}/>
-            <div>
-                <Button value={'All'} onClick={() => setFilterValue('All')}/>
-                <Button value={'Active'} onClick={() => setFilterValue('Active')}/>
-                <Button value={'Completed'} onClick={() => setFilterValue('Completed')}/>
+            <MapTasks deleteTaskHandler={deleteTaskId} checkBoxOnChangeCallBack={checkBoxOnChange} data={filteredData}/>
+            <div className={s.buttonArea}>
+                <Button className={filterValue === 'All' ? s.activeFilter : ''}
+                        value={'All'}
+                        onClick={() => setFilterValue('All')}/>
+                <Button className={filterValue === 'Active' ? s.activeFilter : ''}
+                        value={'Active'}
+                        onClick={() => setFilterValue('Active')}/>
+                <Button className={filterValue === 'Completed' ? s.activeFilter : ''}
+                        value={'Completed'}
+                        onClick={() => setFilterValue('Completed')}/>
             </div>
         </div>
     );
 };
-
-
-const arr: Array<ObjectsInTaskArrayType> = [
-    {id: v1(), title: "HTML&CSS", isDone: true},
-    {id: v1(), title: "JS", isDone: true},
-    {id: v1(), title: "ReactJS", isDone: false},
-    {id: v1(), title: "Rest API", isDone: false}
-]

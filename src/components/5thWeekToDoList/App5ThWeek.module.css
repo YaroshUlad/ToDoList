@@ -1,8 +1,7 @@
 .AppWrapper {
-    margin: 20px;
-    border: 2px solid black;
-    width: max-content;
-    padding: 10px 20px;
-    border-radius: 10px;
-    text-align: center;
+    display: flex;
+}
+
+.buttonArea {
+    margin: 10px;
 }

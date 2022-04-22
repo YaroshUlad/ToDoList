@@ -1,0 +1,20 @@
+.todolistWrap {
+    margin: 20px;
+    border: 2px solid black;
+    width: max-content;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.buttonArea {
+    margin: 10px;
+}
+
+.buttonArea button {
+    margin: 2px;
+}
+
+.activeFilter {
+    background-color: #c44c4c;
+}
