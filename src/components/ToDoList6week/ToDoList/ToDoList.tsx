@@ -55,8 +55,11 @@ export const ToDoList = (props: ToDoListPropsType) => {
                 <Button buttonTitle={'x'} callBack={deleteToDoList}/>
             </h3>
             <AddItemForm callBack={addNewTask}/>
-            <MappingTasks renameTask={renameTask} isDoneChanger={isDoneChanger} removeTask={removeTask}
-                          data={props.data}/>
+            {props.data.length === 0
+                ? <span>Add your first task</span>
+                : <MappingTasks renameTask={renameTask} isDoneChanger={isDoneChanger} removeTask={removeTask}
+                                data={props.data}/>}
+
             <div className={s.filterWrapper}>
                 <Button className={filterValue === 'All' ? 'ActiveFilter' : ''} buttonTitle={'All'}
                         callBack={() => filterHandler('All')}/>
