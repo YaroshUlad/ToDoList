@@ -1,14 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import App4Week from "./components/Components4week/App4Week";
-import App5ThWeek from "./components/5thWeekToDoList/App5ThWeek";
+import App from "./components/ToDoList6week/App";
 
 ReactDOM.render(
     <React.StrictMode>
-        <App5ThWeek/>
+        <App/>
     </React.StrictMode>,
     document.getElementById('root')
 );
