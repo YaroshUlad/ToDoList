@@ -1,6 +1,11 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import s from './AddItemForm.module.css'
 
-export const AddItemForm = () => {
+export type AddItemFormPropsType = {
+    callBack: (newItemTitle: string) => void
+}
+
+export const AddItemForm = (props: AddItemFormPropsType) => {
     const [value, setValue] = useState<string>('')
     const [error, setError] = useState<string>('')
 
@@ -15,7 +20,7 @@ export const AddItemForm = () => {
     }
     const onClickHandler = () => {
         if (value.trim()) {
-            console.log(value.trim()) // send value with callBack
+            props.callBack(value.trim()) // send value with callBack
             setValue('')
         } else {
             setError('Field is required')
@@ -25,10 +30,17 @@ export const AddItemForm = () => {
     return (
         <div>
             <div>
-                <input value={value} onKeyPress={onKeyPressHandler} onChange={onChangeHandler} type="text"/>
-                <button onClick={onClickHandler}>+</button>
+                <input className={error ? s.error : ''}
+                       value={value}
+                       onKeyPress={onKeyPressHandler}
+                       onChange={onChangeHandler}
+                       type="text"/>
+                <button disabled={!!error}
+                        className={error ? s.error : ''}
+                        onClick={onClickHandler}>+
+                </button>
             </div>
-            {error ? <span>{error}</span> : <></>}
+            {error ? <span className={s.error}>{error}</span> : <></>}
         </div>
     );
 }
