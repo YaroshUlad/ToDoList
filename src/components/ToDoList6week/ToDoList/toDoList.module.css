@@ -18,3 +18,12 @@
 
 }
 
+.filterWrapper {
+    display: flex;
+    height: 100%;
+    align-items: flex-end;
+}
+
+.hint {
+    margin-top: 20px;
+}

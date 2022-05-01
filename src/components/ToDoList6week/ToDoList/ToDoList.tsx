@@ -56,7 +56,7 @@ export const ToDoList = (props: ToDoListPropsType) => {
             </h3>
             <AddItemForm callBack={addNewTask}/>
             {props.data.length === 0
-                ? <span>Add your first task</span>
+                ? <span className={s.hint}>Add your first task</span>
                 : <MappingTasks renameTask={renameTask} isDoneChanger={isDoneChanger} removeTask={removeTask}
                                 data={props.data}/>}
 
