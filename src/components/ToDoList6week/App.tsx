@@ -81,19 +81,38 @@ const App = () => {
         setTasksForToDoLists({...tasksForToDoLists, [toDoListId]: newTaskArray})
     }
 
+    const renameTask = (taskId: string, newTaskTitle: string, toDoListId: string) => {
+        const taskArray = tasksForToDoLists[toDoListId]
+        const newTaskArray = taskArray.map(el => el.id === taskId ? {...el, title: newTaskTitle} : el)
+        setTasksForToDoLists({...tasksForToDoLists, [toDoListId]: newTaskArray})
+    }
+
+    const filterChanger = (filter: FilterValueType, toDoListId: string) => {
+        setToDoLists(toDoLists.map(el => el.id === toDoListId ? {...el, filter} : el))
+    }
+
 
     return (
         <div>
             <AddItemForm callBack={addNewToDoList}/>
             {toDoLists.map(el => {
+                let filteredTasks = tasksForToDoLists[el.id]
+                if (el.filter === 'Active') {
+                    filteredTasks = tasksForToDoLists[el.id].filter(el => !el.isDone)
+                }
+                if (el.filter === 'Completed') {
+                    filteredTasks = tasksForToDoLists[el.id].filter(el => el.isDone)
+                }
                 return (
                     <ToDoList
                         id={el.id}
                         key={el.id}
                         title={el.title}
+                        data={filteredTasks}
                         removeTask={removeTask}
+                        renameTask={renameTask}
                         isDoneChanger={isDoneChanger}
-                        data={tasksForToDoLists[el.id]}
+                        filterChanger={filterChanger}
                         deleteToDoList={deleteToDoList}
                         addNewTask={addNewTaskToToDoList}
                         renameToDoList={newToDoListTitleHandler}

@@ -13,11 +13,13 @@ export type ToDoListPropsType = {
     id: string
     title: string
     data: Array<TasksType>
+    filterChanger: (filter: FilterValueType, toDoListId: string) => void
     removeTask: (taskId: string, toDoListId: string) => void
     addNewTask: (taskTitle: string, toDoListId: string) => void
     deleteToDoList: (toDoListId: string) => void
     renameToDoList: (newItemTitle: string, toDoListId: string) => void
     isDoneChanger: (taskId: string, newIsDone: boolean, toDoListId: string) => void
+    renameTask: (taskId: string, newTaskTitle: string, toDoListId: string) => void
     //addNewTask: (newItemTitle: string) => void
 }
 export type FilterValueType = 'All' | 'Completed' | 'Active'
@@ -31,7 +33,7 @@ export const ToDoList = (props: ToDoListPropsType) => {
         props.addNewTask(newItemTitle, props.id)
     }
     const filterHandler = (filterValue: FilterValueType) => {
-
+        props.filterChanger(filterValue, props.id)
     }
     const deleteToDoList = () => {
         props.deleteToDoList(props.id)
@@ -42,6 +44,9 @@ export const ToDoList = (props: ToDoListPropsType) => {
     const isDoneChanger = (taskId: string, newIsDone: boolean) => {
         props.isDoneChanger(taskId, newIsDone, props.id)
     }
+    const renameTask = (taskId: string, newTaskTitle: string) => {
+        props.renameTask(taskId, newTaskTitle, props.id)
+    }
     return (
         <div>
             <h3>
@@ -49,7 +54,8 @@ export const ToDoList = (props: ToDoListPropsType) => {
                 <Button buttonTitle={'x'} callBack={deleteToDoList}/>
             </h3>
             <AddItemForm callBack={addNewTask}/>
-            <MappingTasks isDoneChanger={isDoneChanger} removeTask={removeTask} data={props.data}/>
+            <MappingTasks renameTask={renameTask} isDoneChanger={isDoneChanger} removeTask={removeTask}
+                          data={props.data}/>
             <div>
                 <Button buttonTitle={'All'} callBack={() => filterHandler('All')}/>
                 <Button buttonTitle={'Active'} callBack={() => filterHandler('Active')}/>

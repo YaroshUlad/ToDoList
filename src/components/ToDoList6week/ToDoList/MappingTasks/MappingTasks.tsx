@@ -10,6 +10,7 @@ type TasksObjectType = {
 type MappingTasksPropsType = {
     data: Array<TasksObjectType>
     removeTask: (taskId: string) => void
+    renameTask: (taskId: string, newTaskTitle: string) => void
     isDoneChanger: (taskId: string, newIsDone: boolean) => void
 }
 export const MappingTasks = (props: MappingTasksPropsType) => {
@@ -20,7 +21,7 @@ export const MappingTasks = (props: MappingTasksPropsType) => {
                     props.isDoneChanger(el.id, e.currentTarget.checked)
                 }
                 const newTaskTitleCallBackHandler = (newItemTitle: string) => {
-                    console.log(newItemTitle)
+                    props.renameTask(el.id, newItemTitle)
                 }
                 const deleteTaskHandler = () => {
                     props.removeTask(el.id)
