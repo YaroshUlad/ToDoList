@@ -1,56 +1,52 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import {AddItemForm} from "../AddItemForm/AddItemForm";
-import {v1} from "uuid";
+import {Button} from "../Button/Button";
+import {MappingTasks} from "./MappingTasks/MappingTasks";
+import {MutableSpan} from "../MutableSpan/MutableSpan";
 
-export type ToDoListPropsType = {
-    addNewTask: (newItemTitle: string) => void
-}
-
-export const ToDoList = () => {
-    const Arr = [
-        {id: v1(), title: "HTML&CSS", isDone: true},
-        {id: v1(), title: "JS", isDone: true},
-        {id: v1(), title: "ReactJS", isDone: false},
-        {id: v1(), title: "Rest API", isDone: false}
-    ]
-    const addNewTask = (newItemTitle: string) => {
-
-    }
-
-    return (
-        <div>
-            TodoList
-            <h3>What To Learn</h3>
-            <AddItemForm callBack={addNewTask}/>
-            <MappingTasks data={Arr}/>
-        </div>
-    );
-}
-
-type TasksObjectType = {
+type TasksType = {
     id: string
     title: string
     isDone: boolean
 }
-
-type MappingTasksPropsType = {
-    data: Array<TasksObjectType>
+export type ToDoListPropsType = {
+    id: string
+    title: string
+    data: Array<TasksType>
+    deleteToDoList: (toDoListId: string) => void
+    renameToDoList: (newItemTitle: string, toDoListId: string) => void
+    //addNewTask: (newItemTitle: string) => void
 }
+export type FilterValueType = 'All' | 'Completed' | 'Active'
 
-const MappingTasks = (props: MappingTasksPropsType) => {
+export const ToDoList = (props: ToDoListPropsType) => {
+
+    const newToDoListTitle = (newItemTitle: string) => {
+        props.renameToDoList(newItemTitle, props.id)
+    }
+    const addNewTask = (newItemTitle: string) => {
+
+    }
+    const filterHandler = (filterValue: FilterValueType) => {
+
+    }
+    const deleteToDoList = () => {
+        props.deleteToDoList(props.id)
+    }
     return (
-        <ol>
-            {props.data.map((el, index) => {
-                const checkBoxOnChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                    console.log(e.currentTarget.checked)
-                }
-                return (
-                    <li key={el.id} value={index + 1}>
-                        <input type="checkbox" checked={el.isDone} onChange={checkBoxOnChangeHandler}/>
-                        <span>{el.title}</span>
-                    </li>
-                )
-            })}
-        </ol>
-    )
+        <div>
+            <h3>
+                <MutableSpan itemTitle={props.title} newItemTitleCallBack={newToDoListTitle}/>
+                <Button buttonTitle={'x'} callBack={deleteToDoList}/>
+            </h3>
+            <AddItemForm callBack={addNewTask}/>
+            <MappingTasks data={props.data}/>
+            <div>
+                <Button buttonTitle={'All'} callBack={() => filterHandler('All')}/>
+                <Button buttonTitle={'Active'} callBack={() => filterHandler('Active')}/>
+                <Button buttonTitle={'Completed'} callBack={() => filterHandler('Completed')}/>
+            </div>
+        </div>
+    );
 }
+
