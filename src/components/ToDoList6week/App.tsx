@@ -62,18 +62,41 @@ const App = () => {
         setTasksForToDoLists({...tasksForToDoLists})
     }
 
+    const addNewTaskToToDoList = (taskTitle: string, toDoListId: string) => {
+        let toDoListTasks = tasksForToDoLists[toDoListId]
+        const newTask = {id: v1(), title: taskTitle, isDone: false}
+        toDoListTasks = [newTask, ...toDoListTasks]
+        setTasksForToDoLists({...tasksForToDoLists, [toDoListId]: toDoListTasks})
+    }
+
+    const removeTask = (taskId: string, toDoListId: string) => {
+        const toDoListTasks = tasksForToDoLists[toDoListId]
+        const newToDoListTasks = toDoListTasks.filter(el => el.id !== taskId)
+        setTasksForToDoLists({...tasksForToDoLists, [toDoListId]: newToDoListTasks})
+    }
+
+    const isDoneChanger = (taskId: string, newIsDone: boolean, toDoListId: string) => {
+        const taskArray = tasksForToDoLists[toDoListId]
+        const newTaskArray = taskArray.map(el => el.id === taskId ? {...el, isDone: newIsDone} : el)
+        setTasksForToDoLists({...tasksForToDoLists, [toDoListId]: newTaskArray})
+    }
+
 
     return (
         <div>
             <AddItemForm callBack={addNewToDoList}/>
             {toDoLists.map(el => {
                 return (
-                    <ToDoList deleteToDoList={deleteToDoList}
-                              id={el.id}
-                              key={el.id}
-                              title={el.title}
-                              data={tasksForToDoLists[el.id]}
-                              renameToDoList={newToDoListTitleHandler}
+                    <ToDoList
+                        id={el.id}
+                        key={el.id}
+                        title={el.title}
+                        removeTask={removeTask}
+                        isDoneChanger={isDoneChanger}
+                        data={tasksForToDoLists[el.id]}
+                        deleteToDoList={deleteToDoList}
+                        addNewTask={addNewTaskToToDoList}
+                        renameToDoList={newToDoListTitleHandler}
 
                     />
                 )

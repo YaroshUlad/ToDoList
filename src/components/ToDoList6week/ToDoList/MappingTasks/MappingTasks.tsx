@@ -9,19 +9,21 @@ type TasksObjectType = {
 }
 type MappingTasksPropsType = {
     data: Array<TasksObjectType>
+    removeTask: (taskId: string) => void
+    isDoneChanger: (taskId: string, newIsDone: boolean) => void
 }
 export const MappingTasks = (props: MappingTasksPropsType) => {
     return (
         <ol>
             {props.data.map((el, index) => {
                 const checkBoxOnChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                    console.log(e.currentTarget.checked)
+                    props.isDoneChanger(el.id, e.currentTarget.checked)
                 }
                 const newTaskTitleCallBackHandler = (newItemTitle: string) => {
                     console.log(newItemTitle)
                 }
                 const deleteTaskHandler = () => {
-                    console.log(el.id)
+                    props.removeTask(el.id)
                 }
                 return (
                     <li key={el.id} value={index + 1}>
