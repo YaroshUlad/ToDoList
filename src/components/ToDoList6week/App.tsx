@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {ToDoList} from "./ToDoList/ToDoList";
 import {AddItemForm} from "./AddItemForm/AddItemForm";
 import {v1} from "uuid";
+import './App.css'
 
 type FilterValueType = 'All' | 'Completed' | 'Active'
 
@@ -11,40 +12,31 @@ type ToDoListType = {
     filter: 'All' | 'Completed' | 'Active'
 }
 
-
 type TasksType = {
     id: string
     title: string
     isDone: boolean
 }
 
+type TasksForToDoListsType = {
+    [toDoListId: string]: Array<TasksType>
+}
+
+
 const App = () => {
+    const [toDoLists, setToDoLists] = useState<Array<ToDoListType>>([])
 
-    const a = v1()
-    const b = v1()
-    const [toDoLists, setToDoLists] = useState<Array<ToDoListType>>([
-        {id: a, title: 'What to learn', filter: 'All'},
-        {id: b, title: 'What to Buy', filter: 'All'}
-
-    ])
-    const [tasksForToDoLists, setTasksForToDoLists] = useState({
-        [a]: [{id: v1(), title: "ReactJS", isDone: false},
-            {id: v1(), title: "ReactJS", isDone: false},
-            {id: v1(), title: "ReactJS", isDone: false}],
-        [b]: [{id: v1(), title: "ReactJS", isDone: false},
-            {id: v1(), title: "ReactJS", isDone: false}]
-    })
+    const [tasksForToDoLists, setTasksForToDoLists] = useState<TasksForToDoListsType>({})
 
     const addNewToDoList = (newToDoListTitle: string) => {
         let toDoListId = v1()
         let filterValue: FilterValueType = 'All'
         let newToDoList = {id: toDoListId, title: newToDoListTitle, filter: filterValue}
         setToDoLists([newToDoList, ...toDoLists])
-        let newArrayForTasks: Array<TasksType> = [{id: v1(), title: "ReactJS", isDone: false}]
+        let newArrayForTasks: Array<TasksType> = []
         setTasksForToDoLists(
             {...tasksForToDoLists, [toDoListId]: newArrayForTasks}
         )
-        console.log(tasksForToDoLists)
     }
 
     const newToDoListTitleHandler = (newItemTitle: string, toDolistId: string) => {
@@ -90,12 +82,9 @@ const App = () => {
     const filterChanger = (filter: FilterValueType, toDoListId: string) => {
         setToDoLists(toDoLists.map(el => el.id === toDoListId ? {...el, filter} : el))
     }
-
-
-    return (
-        <div>
-            <AddItemForm callBack={addNewToDoList}/>
-            {toDoLists.map(el => {
+    const toDoListMap = () => {
+        return (
+            toDoLists.map(el => {
                 let filteredTasks = tasksForToDoLists[el.id]
                 if (el.filter === 'Active') {
                     filteredTasks = tasksForToDoLists[el.id].filter(el => !el.isDone)
@@ -119,8 +108,15 @@ const App = () => {
 
                     />
                 )
-            })}
-            {/*<ToDoList/>*/}
+            })
+        )
+    }
+
+    return (
+        <div>
+            <AddItemForm callBack={addNewToDoList}/>
+            {toDoLists.length === 0 ? <div>Add your first ToDoList</div> :
+                <div className={'toDoListsWrapper'}>{toDoListMap()}</div>}
         </div>
     );
 };

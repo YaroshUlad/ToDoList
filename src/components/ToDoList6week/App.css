@@ -1,0 +1,13 @@
+.toDoListsWrapper {
+    display: flex;
+    margin: 10px;
+}
+
+button {
+    background-color: #00bbbb;
+}
+
+.ActiveFilter {
+    background-color: #a2ffff;
+    color: #000000;
+}

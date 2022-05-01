@@ -1,0 +1,21 @@
+.wrap {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 15px;
+}
+
+
+.wrapTask {
+    display: flex;
+    background-color: rgba(67, 122, 122, 0.94);
+    margin-bottom: 5px;
+    padding: 5px 10px 5px 10px;
+    border-radius: 10px;
+}
+
+.wrapTask div {
+    flex-grow: 1;
+    text-align: center;
+
+}

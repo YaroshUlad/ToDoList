@@ -1,6 +1,7 @@
 import React, {ChangeEvent} from "react";
 import {MutableSpan} from "../../MutableSpan/MutableSpan";
 import {Button} from "../../Button/Button";
+import s from './MapTask.module.css'
 
 type TasksObjectType = {
     id: string
@@ -15,8 +16,8 @@ type MappingTasksPropsType = {
 }
 export const MappingTasks = (props: MappingTasksPropsType) => {
     return (
-        <ol>
-            {props.data.map((el, index) => {
+        <div className={s.wrap}>
+            {props.data.map((el) => {
                 const checkBoxOnChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
                     props.isDoneChanger(el.id, e.currentTarget.checked)
                 }
@@ -27,13 +28,15 @@ export const MappingTasks = (props: MappingTasksPropsType) => {
                     props.removeTask(el.id)
                 }
                 return (
-                    <li key={el.id} value={index + 1}>
+                    <div key={el.id} className={s.wrapTask}>
                         <input type="checkbox" checked={el.isDone} onChange={checkBoxOnChangeHandler}/>
-                        <MutableSpan itemTitle={el.title} newItemTitleCallBack={newTaskTitleCallBackHandler}/>
+                        <div>
+                            <MutableSpan itemTitle={el.title} newItemTitleCallBack={newTaskTitleCallBackHandler}/>
+                        </div>
                         <Button buttonTitle={'x'} callBack={deleteTaskHandler}/>
-                    </li>
+                    </div>
                 )
             })}
-        </ol>
+        </div>
     )
 }
