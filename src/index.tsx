@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import App8 from './components/8week/App8';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import App from "./components/ToDoList6week/App";
+
 
 ReactDOM.render(
     <React.StrictMode>
-        <App/>
+        <App8/>
     </React.StrictMode>,
     document.getElementById('root')
 );

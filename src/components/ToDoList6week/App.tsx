@@ -113,7 +113,7 @@ const App = () => {
     }
 
     return (
-        <div>
+        <div className={'AppWrapper'}>
             <AddItemForm callBack={addNewToDoList}/>
             {toDoLists.length === 0 ? <div>Add your first ToDoList</div> :
                 <div className={'toDoListsWrapper'}>{toDoListMap()}</div>}
