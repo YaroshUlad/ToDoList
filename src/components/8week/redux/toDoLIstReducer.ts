@@ -9,8 +9,6 @@ type tdlType = {
 type toDoListsType = tdlType[]
 type initialStateType = {
     toDoLists: toDoListsType
-    newTodolistTitleForAdd: string
-    newTitleValueForToDoLists: string
 }
 
 type ActionType =
@@ -18,8 +16,6 @@ type ActionType =
     | renameTDLActionType
     | SetNewFilterActionType
     | RemoveTDLActionType
-    | SetNewToDoListTitleForAddActionType
-    | NewTitleValueForToDoListsActionType
 
 const initialState = {
     toDoLists: [],
@@ -95,38 +91,6 @@ export const removeToDoList = (tdlId: string) => {
     }
 }
 
-type SetNewToDoListTitleForAddActionType = {
-    type: typeof SET_NEW_TDL_TITLE_FOR_ADD
-    payload: {
-        newTodolistTitleForAdd: string
-    }
-}
-const SET_NEW_TDL_TITLE_FOR_ADD = 'SET_NEW_TDL_TITLE_FOR_ADD'
-export const setNewToDoListTitleForAddAC = (newTodolistTitleForAdd: string) => {
-    return {
-        type: SET_NEW_TDL_TITLE_FOR_ADD,
-        payload: {
-            newTodolistTitleForAdd
-        }
-    }
-}
-
-type NewTitleValueForToDoListsActionType = {
-    type: typeof NEW_TITLE_VALUE_FOR_TDL
-    payload: {
-        newTitleValueForToDoLists: string
-    }
-}
-const NEW_TITLE_VALUE_FOR_TDL = 'NEW_TITLE_VALUE_FOR_TDL'
-export const newTitleValueForToDoListsAC = (newTitleValueForToDoLists: string) => {
-    return {
-        type: NEW_TITLE_VALUE_FOR_TDL,
-        payload: {
-            newTitleValueForToDoLists
-        }
-    }
-}
-
 export const toDoLIstReducer = (state: initialStateType = initialState, action: ActionType): initialStateType => {
     switch (action.type) {
         case ADD_NEW_TODOLIST:
@@ -153,10 +117,6 @@ export const toDoLIstReducer = (state: initialStateType = initialState, action: 
         case REMOVE_TODOLIST:
             const tdlId2 = action.payload.tdlId
             return {...state, toDoLists: state.toDoLists.filter(el => el.id !== tdlId2)}
-        case SET_NEW_TDL_TITLE_FOR_ADD:
-            return {...state, newTodolistTitleForAdd: action.payload.newTodolistTitleForAdd}
-        case NEW_TITLE_VALUE_FOR_TDL:
-            return {...state, newTitleValueForToDoLists: action.payload.newTitleValueForToDoLists}
         default:
             return state
     }
