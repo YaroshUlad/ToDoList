@@ -4,7 +4,6 @@ export type FilterType = 'All' | 'Active' | 'Completed'
 type tdlType = {
     id: string
     title: string
-    isDone: boolean
     filter: FilterType
 }
 type toDoListsType = tdlType[]
@@ -134,7 +133,6 @@ export const toDoLIstReducer = (state: initialStateType = initialState, action: 
             const newToDoList = {
                 id: v1(),
                 title: action.payload.newToDoListTitle,
-                isDone: false,
                 filter: 'All' as const
             }
             return {...state, toDoLists: state.toDoLists.concat(newToDoList)}
@@ -146,14 +144,15 @@ export const toDoLIstReducer = (state: initialStateType = initialState, action: 
                 toDoLists: state.toDoLists.map(el => el.id === tdlId ? {...el, title: newTDLName} : el)
             }
         case SET_NEW_FILTER:
-            //const tdlId = action.payload.tdlId
+            const tdlId1 = action.payload.tdlId
             const newFilterValue = action.payload.newFilterValue
             return {
                 ...state,
-                toDoLists: state.toDoLists.map(el => el.id === tdlId ? {...el, filter: newFilterValue} : el)
+                toDoLists: state.toDoLists.map(el => el.id === tdlId1 ? {...el, filter: newFilterValue} : el)
             }
         case REMOVE_TODOLIST:
-            return {...state, toDoLists: state.toDoLists.filter(el => el.id !== tdlId)}
+            const tdlId2 = action.payload.tdlId
+            return {...state, toDoLists: state.toDoLists.filter(el => el.id !== tdlId2)}
         case SET_NEW_TDL_TITLE_FOR_ADD:
             return {...state, newTodolistTitleForAdd: action.payload.newTodolistTitleForAdd}
         case NEW_TITLE_VALUE_FOR_TDL:
