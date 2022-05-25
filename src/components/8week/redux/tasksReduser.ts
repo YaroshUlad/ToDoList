@@ -5,13 +5,17 @@ export type TaskType = {
     title: string
     isDone: boolean
 }
-type TasksStateType = {
+export type TasksStateType = {
     [tdlId: string]: TaskType[]
 }
 
 const initialState = {}
 
-type ActionType = AddNewTaskActionType | RemoveTaskActionType | ChangeIsDoneActionType | ChangeTaskTitleActionType
+export type TaskReducerActionType =
+    AddNewTaskActionType
+    | RemoveTaskActionType
+    | ChangeIsDoneActionType
+    | ChangeTaskTitleActionType
 
 type AddNewTaskActionType = {
     type: typeof ADD_NEW_TASK
@@ -90,7 +94,7 @@ export const changeTaskTitleAC = (tdlId: string,
 }
 
 
-const tasksReducer = (state: TasksStateType = initialState, action: ActionType): TasksStateType => {
+export const tasksReducer = (state: TasksStateType = initialState, action: TaskReducerActionType): TasksStateType => {
     switch (action.type) {
         case ADD_NEW_TASK:
             const newTask = {id: v1(), title: action.payload.title, isDone: false}

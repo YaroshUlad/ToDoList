@@ -1,4 +1,5 @@
 import {v1} from "uuid";
+import {ActionType} from "./store";
 
 export type FilterType = 'All' | 'Active' | 'Completed'
 type tdlType = {
@@ -6,25 +7,18 @@ type tdlType = {
     title: string
     filter: FilterType
 }
-type toDoListsType = tdlType[]
-type initialStateType = {
-    toDoLists: toDoListsType
-}
+export type toDoListsType = tdlType[]
 
-type ActionType =
+
+export type TDLReducerActionType =
     AddNewTDLActionType
     | renameTDLActionType
     | SetNewFilterActionType
     | RemoveTDLActionType
 
-const initialState = {
-    toDoLists: [],
-    newTodolistTitleForAdd: '',
-    newTitleValueForToDoLists: ''
-}
 
-type AddNewTDLActionType = {
-    type: typeof ADD_NEW_TODOLIST,
+export type AddNewTDLActionType = {
+    type: string,
     payload: {
         newToDoListTitle: string
     }
@@ -40,7 +34,7 @@ export const addNewTodolistAC = (newToDoListTitle: string) => {
 }
 
 type renameTDLActionType = {
-    type: typeof RENAME_TODOLIST,
+    type: string,
     payload: {
         tdlId: string
         newTDLName: string
@@ -58,14 +52,14 @@ export const renameToDoListAC = (tdlId: string, newTDLName: string) => {
 }
 
 type SetNewFilterActionType = {
-    type: typeof SET_NEW_FILTER,
+    type: string,
     payload: {
         tdlId: string
         newFilterValue: FilterType
     }
 }
 const SET_NEW_FILTER = 'SET_NEW_FILTER'
-export const setNewFilter = (tdlId: string, newFilterValue: FilterType) => {
+export const setNewFilterAC = (tdlId: string, newFilterValue: FilterType) => {
     return {
         type: SET_NEW_FILTER,
         payload: {
@@ -76,13 +70,13 @@ export const setNewFilter = (tdlId: string, newFilterValue: FilterType) => {
 }
 
 type RemoveTDLActionType = {
-    type: typeof REMOVE_TODOLIST,
+    type: string,
     payload: {
         tdlId: string
     }
 }
 const REMOVE_TODOLIST = 'REMOVE_TODOLIST'
-export const removeToDoList = (tdlId: string) => {
+export const removeToDoListAC = (tdlId: string) => {
     return {
         type: REMOVE_TODOLIST,
         payload: {
@@ -91,7 +85,9 @@ export const removeToDoList = (tdlId: string) => {
     }
 }
 
-export const toDoLIstReducer = (state: initialStateType = initialState, action: ActionType): initialStateType => {
+const initialState: toDoListsType = []
+
+export const toDoLIstReducer = (state: toDoListsType = initialState, action: ActionType): toDoListsType => {
     switch (action.type) {
         case ADD_NEW_TODOLIST:
             const newToDoList = {
@@ -99,24 +95,18 @@ export const toDoLIstReducer = (state: initialStateType = initialState, action: 
                 title: action.payload.newToDoListTitle,
                 filter: 'All' as const
             }
-            return {...state, toDoLists: state.toDoLists.concat(newToDoList)}
+            return [...state.concat(newToDoList)]
         case RENAME_TODOLIST:
             const tdlId = action.payload.tdlId
             const newTDLName = action.payload.newTDLName
-            return {
-                ...state,
-                toDoLists: state.toDoLists.map(el => el.id === tdlId ? {...el, title: newTDLName} : el)
-            }
+            return [...state.map(el => el.id === tdlId ? {...el, title: newTDLName} : el)]
         case SET_NEW_FILTER:
             const tdlId1 = action.payload.tdlId
             const newFilterValue = action.payload.newFilterValue
-            return {
-                ...state,
-                toDoLists: state.toDoLists.map(el => el.id === tdlId1 ? {...el, filter: newFilterValue} : el)
-            }
+            return [...state.map(el => el.id === tdlId1 ? {...el, filter: newFilterValue} : el)]
         case REMOVE_TODOLIST:
             const tdlId2 = action.payload.tdlId
-            return {...state, toDoLists: state.toDoLists.filter(el => el.id !== tdlId2)}
+            return [...state.filter(el => el.id !== tdlId2)]
         default:
             return state
     }
